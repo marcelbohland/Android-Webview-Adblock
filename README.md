@@ -1,2 +1,2 @@
 # Android-Webview-Adblock
-A Adblock System for Android Webview
+Adblock System for Android Webview
