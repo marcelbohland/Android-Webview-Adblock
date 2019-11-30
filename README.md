@@ -9,20 +9,11 @@ How to implement:
 
 2. Create a raw folter in Android Studio ({projectnamea}\app\src\main\res\raw)
 
-3. Add filterlists
+3. Add filterlists to raw folder
 
-https://v.firebog.net/hosts/AdguardDNS.txt
-https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
-https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
-https://hosts-file.net/ad_servers.txt
-https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0
-https://v.firebog.net/hosts/Easylist.txt
+https://raw.githubusercontent.com/Openadblockserverlist/adblockserverlist/master/adblockserverlist.txt
 
-4. Add to filterlists lines :::: as in MainActivity.java.
-[https://blog.m00n.eu/notepad-prefixe-oder-suffixe-zu-jeder-zeile-hinzufuegen/]
-
-
-
+# Attention! the filterlist also has license conditions
 
 # License
 
