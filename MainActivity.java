@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         String strLine2="";
         adservers = new StringBuilder();
 
-        InputStream fis2 = this.getResources().openRawResource(R.raw.adservers);
+        InputStream fis2 = this.getResources().openRawResource(R.raw.adblockserverlist);
         BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
         if(fis2 != null) {
             try {
