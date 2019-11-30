@@ -1,7 +1,6 @@
 package de.marcel.adblockbrowserbyopensearch;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -53,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Load filter loading
-        advertise();
-        advertise2();
-        hosts();
-        AdguardDNS();
         adservers();
 
         //Webview Control
@@ -95,34 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-
-
 	ByteArrayInputStream EMPTY = new ByteArrayInputStream("".getBytes());
-          String kk2= String.valueOf(wwwdf);
-          if (kk2.contains(":::::"+request.getUrl().getHost()))
-          {
-              return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-          }
-          String kk= String.valueOf(wwwdf2);
-	if (kk.contains(":::::"+request.getUrl().getHost()))
-	{
-		return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-	}
-	String kk3= String.valueOf(hosts);
-	if (kk3.contains(":::::"+request.getUrl().getHost()))
-	{
-	    return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-	}
-	String kk4= String.valueOf(AdguardDNS);
-	if (kk4.contains(":::::"+request.getUrl().getHost()))
-	{
-	    return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-	}
-	String kk5= String.valueOf(adservers);
-	if (kk5.contains(request.getUrl().getHost()+":::::"))
-	{
-	    return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-	}
+                    String kk5 = String.valueOf(adservers);
+                    if (kk5.contains(":::::"+request.getUrl().getHost())) {
+                        return new WebResourceResponse("text/plain", "utf-8", EMPTY);
+                    }
           return super.shouldInterceptRequest(view, request);
       }
     }
@@ -133,82 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 //Advertise filter list Loading
-    private void advertise(){
-        String strLine2="";
-        wwwdf2 = new StringBuilder();
-
-        InputStream fis2 = this.getResources().openRawResource(R.raw.dgads);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
-        if(fis2 != null) {
-            try {
-                while ((strLine2 = br2.readLine()) != null) {
-                    wwwdf2.append(strLine2);
-                    wwwdf2.append("\n");
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-    }
-    private void advertise2(){
-        String strLine2="";
-        wwwdf = new StringBuilder();
-
-        InputStream fis2 = this.getResources().openRawResource(R.raw.adlist1);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
-        if(fis2 != null) {
-            try {
-                while ((strLine2 = br2.readLine()) != null) {
-                    wwwdf.append(strLine2);
-                    wwwdf.append("\n");
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-    private void hosts(){
-        String strLine2="";
-        hosts = new StringBuilder();
-
-        InputStream fis2 = this.getResources().openRawResource(R.raw.adserver3);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
-        if(fis2 != null) {
-            try {
-                while ((strLine2 = br2.readLine()) != null) {
-                    hosts.append(strLine2);
-                    hosts.append("\n");
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-    private void AdguardDNS(){
-        String strLine2="";
-        AdguardDNS = new StringBuilder();
-
-        InputStream fis2 = this.getResources().openRawResource(R.raw.adguarddns);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
-        if(fis2 != null) {
-            try {
-                while ((strLine2 = br2.readLine()) != null) {
-                    AdguardDNS.append(strLine2);
-                    AdguardDNS.append("\n");
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
     private void adservers(){
         String strLine2="";
         adservers = new StringBuilder();
