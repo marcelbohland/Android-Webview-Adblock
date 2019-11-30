@@ -40,10 +40,6 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     WebView view;
-    StringBuilder wwwdf2;
-    StringBuilder wwwdf;
-    StringBuilder hosts;
-    StringBuilder AdguardDNS;
     StringBuilder adservers;
 
 
@@ -80,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         view.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         view.loadUrl("https://www.google.de");
     }
-
-
     //Advertise filter with the lists
     public class MyWebViewClient extends WebViewClient {
 
@@ -97,11 +91,6 @@ public class MainActivity extends AppCompatActivity {
           return super.shouldInterceptRequest(view, request);
       }
     }
-
-
-
-
-
 
 //Advertise filter list Loading
     private void adservers(){
@@ -121,7 +110,5 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
     }
-
 }
