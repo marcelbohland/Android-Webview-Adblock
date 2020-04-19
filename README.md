@@ -15,6 +15,8 @@ How to implement:
 
 https://raw.githubusercontent.com/Openadblockserverlist/adblockserverlist/master/adblockserverlist.txt
 
+License: https://github.com/Openadblockserverlist/adblockserverlist/blob/master/LICENSE
+
 # Attention! the filterlist also has license conditions
 
 # License
