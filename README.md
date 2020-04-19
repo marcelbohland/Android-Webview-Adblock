@@ -5,9 +5,9 @@ This project is free too use.
 
 How to implement:
 
-1. Implement into your Project
+1. Implement Adblock.java into your Project
 
-2. Create a raw folter in Android Studio ({projectnamea}\app\src\main\res\raw)
+2. Create a raw folter in Android Studio ({projectname}\app\src\main\res\raw)
 
 3. Add filterlists to raw folder
 
