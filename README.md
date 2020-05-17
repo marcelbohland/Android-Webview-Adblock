@@ -15,6 +15,8 @@ How to implement:
 
 https://raw.githubusercontent.com/Openadblockserverlist/adblockserverlist/master/adblockserverlist.txt
 
+4. If you're having problems... Please take a look at the example --> https://github.com/marcelbohland/Android-Webview-Adblock-Example
+
 License: https://github.com/Openadblockserverlist/adblockserverlist/blob/master/LICENSE
 
 # Attention! the filterlist also has license conditions
