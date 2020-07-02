@@ -3,7 +3,7 @@ Adblock System for Android Webview
 
 This project is free too use.
 
-Example: https://github.com/marcelbohland/Android-Webview-Adblock-Example
+Example App: https://github.com/marcelbohland/Android-Webview-Adblock-Example
 
 How to implement:
 
