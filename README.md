@@ -9,7 +9,7 @@ How to implement:
 
 1. Implement Adblock.java into your Project
 
-2. Create a raw folter in Android Studio ({projectname}\app\src\main\res\raw)
+2. Create a raw folder in Android Studio ({projectname}\app\src\main\res\raw)
 
 3. Add filterlists to raw folder
 
