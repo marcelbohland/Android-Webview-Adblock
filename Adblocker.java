@@ -1,114 +1,118 @@
 package de.marcel.adblockbrowserbyopensearch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.net.Uri;
+
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.os.PersistableBundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.channels.SeekableByteChannel;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
-    WebView view;
+    WebView webView;
     StringBuilder adservers;
-
-
-    protected void onCreate(Bundle savedInstanceState) {
+    
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Load filter loading
-        adservers();
-
-        //Webview Control
-        view = (WebView) findViewById(R.id.webview);
-        registerForContextMenu(view);
-        view.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        view.getSettings().setBuiltInZoomControls(true);
-        view.getSettings().setSupportZoom(true);
-        view.getSettings().setDisplayZoomControls(false);
-        view.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        view.setScrollbarFadingEnabled(true);
-        view.setLongClickable(true);
-        view.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        view.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        view.getSettings().setDomStorageEnabled(true);
-        view.getSettings().setAppCacheEnabled(true);
-        view.getSettings().setSavePassword(true);
-        view.getSettings().setSaveFormData(true);
-        view.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        view.getSettings().setAllowFileAccess(true);
-        view.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
-        view.getSettings().setAllowFileAccess(true);
-        view.getSettings().setEnableSmoothTransition(true);
-        view.setWebViewClient(new MyWebViewClient());
-        view.getSettings().setJavaScriptEnabled(true);
-        view.getSettings().setMediaPlaybackRequiresUserGesture(true);
-        view.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        view.loadUrl("https://www.google.de");
+        
+        readAdServers();
+        
+        // WebView Control
+        webView = findViewById(R.id.webview);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.setScrollbarFadingEnabled(true);
+        webView.setLongClickable(true);
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        webView.setWebViewClient(new MyWebViewClient());
+        //webView.setWebChromeClient(new WebChromeClient());              // Uncomment this if you want to write your custom WebChromeClient class
+        
+        registerForContextMenu(webView);
+        
+        // Set WebSettings for a WebView
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); // Useless in newer versions of Android!
+        webSettings.setSavePassword(true);                              // Useless in newer versions of Android!
+        webSettings.setSaveFormData(true);                              // Useless in newer versions of Android!
+        webSettings.setEnableSmoothTransition(true);                    // Useless in newer versions of Android!
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCachePath(this.getCacheDir().getAbsolutePath());
+    
+        ConnectivityManager cm = (ConnectivityManager)this.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo ani = cm.getActiveNetworkInfo();
+        if(ani != null && ani.isConnected())
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        else
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            
+        webSettings.setAllowFileAccess(true);
+        webSettings.setJavaScriptEnabled(true);                        // Enable this only if you need JavaScript support!
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(false);   // Enable this only if you want pop-ups!
+        webSettings.setMediaPlaybackRequiresUserGesture(true);
     }
-    //Advertise filter with the lists
-    public class MyWebViewClient extends WebViewClient {
-
-        private Map<String, Boolean> loadedUrls = new HashMap<>();
-
-      @Override
-      public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-	ByteArrayInputStream EMPTY = new ByteArrayInputStream("".getBytes());
-                    String kk5 = String.valueOf(adservers);
-                    if (kk5.contains(":::::"+request.getUrl().getHost())) {
-                        return new WebResourceResponse("text/plain", "utf-8", EMPTY);
-                    }
-          return super.shouldInterceptRequest(view, request);
-      }
+    
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState)
+    {
+        super.onPostCreate(savedInstanceState, persistentState);
+        
+        webView.loadUrl("https://www.google.de");
     }
-
-//Advertise filter list Loading
-    private void adservers(){
-        String strLine2="";
+    
+    private void readAdServers() {
+        String line = "";
         adservers = new StringBuilder();
-
-        InputStream fis2 = this.getResources().openRawResource(R.raw.adblockserverlist);
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(fis2));
-        if(fis2 != null) {
+        
+        InputStream is = this.getResources().openRawResource(R.raw.adblockserverlist);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        
+        if(is != null) {
             try {
-                while ((strLine2 = br2.readLine()) != null) {
-                    adservers.append(strLine2);
+                while ((line = br.readLine()) != null) {
+                    adservers.append(line);
                     adservers.append("\n");
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    //Advertise filter with the lists
+    public class MyWebViewClient extends WebViewClient {
+        
+        private Map<String, Boolean> loadedUrls = new HashMap<>();  // TODO - not implemented yet!
+        
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            ByteArrayInputStream EMPTY = new ByteArrayInputStream("".getBytes());
+            String kk5 = String.valueOf(adservers);
+            
+            if (kk5.contains(":::::" + request.getUrl().getHost())) {
+                return new WebResourceResponse("text/plain", "utf-8", EMPTY);
+            }
+            return super.shouldInterceptRequest(view, request);
         }
     }
 }
