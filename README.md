@@ -15,7 +15,7 @@ How to implement:
 
 2. Create a raw folder in Android Studio ({projectname}\app\src\main\res\raw)
 
-3. Add filterlists to raw folder
+3. Add a filterlist to your raw folder
 
 https://raw.githubusercontent.com/Openadblockserverlist/adblockserverlist/master/adblockserverlist.txt
 
