@@ -1,6 +1,6 @@
 # Android-Webview-Adblock
 
-[![current version](https://img.shields.io/badge/current%20version-1.0-blue.svg)](https://github.com/marcelbohland/Android-Webview-Adblock/releases/tag/1.0)
+[![current version](https://img.shields.io/badge/current%20version-1.2-blue.svg)](https://github.com/marcelbohland/Android-Webview-Adblock/releases/tag/1.2)
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-red.svg)](https://github.com/marcelbohland/Android-Webview-Adblock/blob/master/LICENSE)
 
 Adblock System for Android Webview
