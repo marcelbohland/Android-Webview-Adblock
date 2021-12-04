@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -20,8 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
     WebView webView;
@@ -41,16 +38,11 @@ public class MainActivity extends AppCompatActivity {
         webView.setLongClickable(true);
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         webView.setWebViewClient(new MyWebViewClient());
-        //webView.setWebChromeClient(new WebChromeClient());              // Uncomment this if you want to write your custom WebChromeClient class
         
         registerForContextMenu(webView);
         
         // Set WebSettings for a WebView
         WebSettings webSettings = webView.getSettings();
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH); // Useless in newer versions of Android!
-        webSettings.setSavePassword(true);                              // Useless in newer versions of Android!
-        webSettings.setSaveFormData(true);                              // Useless in newer versions of Android!
-        webSettings.setEnableSmoothTransition(true);                    // Useless in newer versions of Android!
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
@@ -59,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setAppCachePath(this.getCacheDir().getAbsolutePath());
+
+        // Load google.de
+        webView.loadUrl("https://www.google.de");
     
         ConnectivityManager cm = (ConnectivityManager)this.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo ani = cm.getActiveNetworkInfo();
@@ -71,14 +66,6 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);                        // Enable this only if you need JavaScript support!
         webSettings.setJavaScriptCanOpenWindowsAutomatically(false);   // Enable this only if you want pop-ups!
         webSettings.setMediaPlaybackRequiresUserGesture(true);
-    }
-    
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState)
-    {
-        super.onPostCreate(savedInstanceState, persistentState);
-        
-        webView.loadUrl("https://www.google.de");
     }
     
     private void readAdServers() {
@@ -102,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
     
     //Advertise filter with the lists
     public class MyWebViewClient extends WebViewClient {
-        
-        private Map<String, Boolean> loadedUrls = new HashMap<>();  // TODO - not implemented yet!
         
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
