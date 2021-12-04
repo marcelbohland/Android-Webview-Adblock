@@ -5,13 +5,13 @@
 
 Adblock System for Android Webview
 
-This project is free too use.
-
 Example App: https://github.com/marcelbohland/Android-Webview-Adblock-Example
+
+<br/>
 
 How to implement:
 
-1. Implement Adblock.java into your Project
+1. Implement Adblock.java/Adblocker.kt into your Project
 
 2. Create a raw folder in Android Studio ({projectname}\app\src\main\res\raw)
 
@@ -21,7 +21,27 @@ https://raw.githubusercontent.com/Openadblockserverlist/adblockserverlist/master
 
 License: https://github.com/Openadblockserverlist/adblockserverlist/blob/master/LICENSE
 
-4. If you're having problems... Please take a look at the example --> https://github.com/marcelbohland/Android-Webview-Adblock-Example
+4. Add following to your AndroidManifest.xml
+
+```xml
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+```
+
+5. Add following to your layout\activity_main.xml
+```xml
+        <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+```
+<br/>
+
+If you're having problems... Please take a look at the example App --> https://github.com/marcelbohland/Android-Webview-Adblock-Example
 
 
 
